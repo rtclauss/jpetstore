@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?><server>
+    <featureManager>
+        <feature>jsp-2.3</feature>
+        <feature>servlet-3.1</feature>
+        <feature>jndi-1.0</feature>
+        <feature>jdbc-4.2</feature>
+        <feature>jaxws-2.2</feature>
+        <feature>localConnector-1.0</feature>
+        <feature>jms-2.0</feature>
+    </featureManager>
+    <httpEndpoint host="*" httpPort="9080" httpsPort="9443" id="defaultHttpEndpoint"/>
+    <authData id="hc-ls-was-dmgrCellManager01/portfolioAlias" password="???" user="db2inst1"/>
+    <jdbcDriver id="DB2_Using_IBM_JCC_Driver" javax.sql.DataSource="com.ibm.db2.jcc.DB2ConnectionPoolDataSource">
+        <library>
+            <!-- <file name="${DB2_JCC_DRIVER_PATH}/db2jcc4.jar"/> -->
+            <file name="/config/lib/db2jcc4.jar"/>
+            <!-- <file name="${UNIVERSAL_JDBC_DRIVER_PATH}/db2jcc_license_cu.jar"/> -->
+            <file name="/config/lib/db2jcc_license_cu.jar"/>
+            <!-- <file name="${DB2_JCC_DRIVER_PATH}/db2jcc_license_cisuz.jar"/> -->
+            <file name="/config/lib/db2jcc_license_cisuz.jar"/>
+            <!-- <file name="${PUREQUERY_PATH}/pdq.jar"/> -->
+            <file name="/config/lib/pdq.jar"/>
+            <!-- <file name="${PUREQUERY_PATH}/pdqmgmt.jar"/> -->
+            <file name="/config/lib/pdqmgmt.jar"/>
+        </library>
+    </jdbcDriver>
+    <dataSource id="PortfolioDB" jdbcDriverRef="DB2_Using_IBM_JCC_Driver" jndiName="jdbc/Portfolio/PortfolioDB">
+        <properties.db2.jcc beginTranForResultSetScrollingAPIs="false" beginTranForVendorAPIs="false" connectionSharing="1" databaseName="TRADER" enableClientInformation="false" enableMultithreadedAccessDetection="false" errorDetectionModel="ExceptionMapping" freeResourcesOnClose="false" jmsOnePhaseOptimization="false" name="PortfolioDB" nonTransactionalDataSource="false" portNumber="30824" preTestSQLString="SELECT CURRENT SQLID FROM SYSIBM.SYSDUMMY1" reauthentication="false" retrieveMessagesFromServerOnGetMessage="true" serverName="rtclauss-sc-proxy.rtp.raleigh.ibm.com" traceLevel="-1" unbindClientRerouteListFromJndi="false" useTransactionRedirect="false" validateNewConnection="false" validateNewConnectionRetryCount="100" validateNewConnectionRetryInterval="3" webSphereDefaultIsolationLevel="2"/>
+        <connectionManager agedTimeout="0" connectionTimeout="180" maxIdleTime="1800" maxPoolSize="50" minPoolSize="0" reapTime="180"/>
+    </dataSource>
+    <jdbcDriver id="OTiSDataSource" javax.sql.DataSource="org.apache.derby.jdbc.EmbeddedConnectionPoolDataSource">
+        <library>
+            <!-- <file name="${WAS_INSTALL_ROOT}/derby/lib/derby.jar"/> -->
+            <file name="/config/lib/derby.jar"/>
+        </library>
+    </jdbcDriver>
+    <dataSource id="OTiSDataSource" jdbcDriverRef="OTiSDataSource" jndiName="OTiSDataSource">
+        <properties.derby.embedded databaseName="/opt/IBM/WebSphere/AppServer/profiles/Dmgr01/OTiS" description="Data source template" name="OTiSDataSource"/>
+        <connectionManager agedTimeout="0" connectionTimeout="180" maxIdleTime="1800" maxPoolSize="10" minPoolSize="1" reapTime="180"/>
+    </dataSource>
+    <variable name="WAS_INSTALL_ROOT" value="!{WAS_INSTALL_ROOT}"/>
+    <variable name="DB2_JCC_DRIVER_PATH" value="${WAS_INSTALL_ROOT}/db2"/>
+    <variable name="DERBY_JDBC_DRIVER_PATH" value="${WAS_INSTALL_ROOT}/derby/lib"/>
+    <variable name="UNIVERSAL_JDBC_DRIVER_PATH" value="${WAS_INSTALL_ROOT}/universalDriver/lib"/>
+    <variable name="DB2_JCC_DRIVER_NATIVEPATH" value=""/>
+    <variable name="PUREQUERY_PATH" value=""/>
+</server>
